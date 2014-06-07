@@ -1,0 +1,64 @@
+/*
+*  CUE OBJECT
+* - organizes the data of an xml node
+* 
+*/
+
+package com.etanercept.lal.datastorage
+{
+
+	import flash.display.*;
+
+	public class CueObject extends Object
+	{
+	
+		public var image:Bitmap;
+		public var node:XML;
+		public var id:int;
+	
+		public function CueObject(nod:XML)
+		{
+			super();
+			node = nod;
+			//trace(">>>cue object node: "+node);
+		}
+		
+		public function getID():Number
+		{
+			return node.@id;
+		}
+	
+		public function getTime():String
+		{
+			return node.@time.toString();
+		}
+	
+		public function getDuration():String
+		{
+			return node.@duration;
+		}
+	
+		public function getImagePath():String
+		{
+			return node.imgPath;
+		}
+	
+		public function getFlvPath():String
+		{
+			return node.flvPath;
+		}
+	
+		public function getType():String
+		{
+			return node.@type;
+		}
+	
+		public function getText():String
+		{
+			return node.copy;
+		}
+	
+	}
+
+}
+

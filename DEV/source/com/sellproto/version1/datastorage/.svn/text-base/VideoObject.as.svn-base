@@ -1,0 +1,108 @@
+/*
+*  VIDEO OBJECT
+* - organizes CueObjects and bitmaps associated with a particular video
+* 
+*/
+
+package com.etanercept.lal.datastorage
+{
+
+	import flash.display.*;
+
+	public class VideoObject extends Object
+	{
+		public var flvPath:String;
+		public var cue_arr:Array;
+		public var image_arr:Array;
+		public var bitMap_arr:Array = new Array;
+	
+		public function VideoObject(path:String, cueObj_arr:Array)
+		{
+			super();
+			flvPath=path;
+			cue_arr=cueObj_arr;
+		}
+	
+		public function getFlvPath():String
+		{
+			return flvPath;
+		}
+	
+		public function getCuesArray():Array
+		{
+			return cue_arr;
+		}
+	
+		public function getImageTotal():uint
+		{
+			var cnt:uint = 0;
+			for(var i:uint;i<cue_arr.length;i++)
+			{
+				if(cue_arr[i].getImagePath() != "null")
+				{
+					cnt++;
+				}
+			}
+			return cnt;
+			cnt=null;
+		}
+		
+		public function getImageArray():Array
+		{
+			var image_arr:Array = new Array;
+			for(var i:uint;i<cue_arr.length;i++)
+			{
+				if(cue_arr[i].getImagePath() != "null")
+				{
+					image_arr.push(cue_arr[i].getImagePath());
+				}
+			}
+			return image_arr;
+			image_arr=null;
+		}
+		
+		public function addBitMap(position:int, img:Bitmap)
+		{
+			bitMap_arr[position]=img;
+		}
+		
+		public function getBitMapArray():Array
+		{
+			return bitMap_arr;
+		}
+		
+		public function getCueTimesArray():Array
+		{
+			var cuePoint_arr:Array = new Array;
+			for(var i:uint;i<cue_arr.length;i++)
+			{
+				cuePoint_arr.push(cue_arr[i].getTime());
+			}
+			return cuePoint_arr;
+			cuePoint_arr=null;
+		}
+		
+		public function getCueTypesArray():Array
+		{
+			var cueTypes_arr:Array = new Array;
+			for(var i:uint;i<cue_arr.length;i++)
+			{
+				cueTypes_arr.push(cue_arr[i].getType());
+			}
+			return cueTypes_arr;
+			cueTypes_arr=null;
+		}
+		
+		public function getTextArray():Array
+		{
+			var text_arr:Array = new Array;
+			for(var i:uint;i<cue_arr.length;i++)
+			{
+				text_arr.push(cue_arr[i].getText());
+			}
+			return text_arr;
+			text_arr=null;
+		}	
+	}
+}
+

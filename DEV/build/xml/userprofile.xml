@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<program>
+	<user id='1'>
+		<settings>
+			<username>dDiggs</username>
+			<lastTab>1</lastTab>
+		</settings>
+		
+		<albums>
+			<album name='My Pets' author='Derev Diggs'>
+	
+				<media id='57' type='image' album='My Pets' author='Derev Diggs'>
+					<preview>images/ch1imagePrvw.jpg</preview>
+					<full>images/ch1imageHigh.jpg</full>
+					<tags>cute, thirsty, kitten</tags>
+				</media>
+				
+				<media id='158' type='image' album='Big frogs' author='Derev Diggs'>
+					<preview>images/ch1imagePrvw.jpg</preview>
+					<full>images/ch1imageHigh.jpg</full>
+					<tags>cute, thirsty, kitten</tags>
+				</media>
+			
+			</album>
+			
+			<album name='Favorite Sountrack Songs ' author='the Who'>
+	
+				<media id='676' type='audio' album='My Pets'>
+					<preview>audio/users/pinballwizardPrvw.mp3</preview>
+					<full>audio/users/pinballwizardHigh.mp3</full>
+					<tags>classic, rock, 60s</tags>
+				</media>
+			
+			</album>
+		</albums>
+		
+		<purchases>
+			<album name='My Pets' author='Derev Diggs'>
+	
+				<media id='57' type='image' album='My Pets'>
+					<preview>images/ch1imagePrvw.jpg</preview>
+					<full>images/ch1imageHigh.jpg</full>
+					<tags>cute, thirsty, kitten</tags>
+				</media>
+			
+			</album>
+			
+			<album name='Oldies but goodies' author='the Who'>
+	
+				<media id='676' type='audio' album='My Pets'>
+					<preview>audio/users/pinballwizardPrvw.mp3</preview>
+					<full>audio/users/pinballwizardHigh.mp3</full>
+					<tags>classic, rock, 60s</tags>
+				</media>
+			
+			</album>
+			
+		</purchases>
+		
+	</user>
+</program>
