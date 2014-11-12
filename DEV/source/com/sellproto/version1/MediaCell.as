@@ -21,21 +21,21 @@ package com.sellproto.version1
 	public class MediaCell extends Sprite
 	{
 		public static const BASE_URL:String = "http://thoughtrender.com/SLWEB/";
-		private var _ViewController:ViewController;
-		private var _XMLProfileManager:XMLProfileManager;
-		private var _XMLQueryManager:XMLQueryManager;
-		private var _XMLAuthorQueryManager:XMLQueryManager;
-		private var _debug:DebugWindow;
+		private var _ViewController:ViewController; //main viewcontroller
+		private var _XMLProfileManager:XMLProfileManager; // load and parse user profile XML
+		private var _XMLQueryManager:XMLQueryManager; // parse database querys
+		private var _XMLAuthorQueryManager:XMLQueryManager; // parse all users xml
+		private var _debug:DebugWindow; // a simple window for tracing variables live
 		
-		private var _serverPath:String;
-		private var _userPath:String = "users/de/derev_diggs/";
-		private var _xmlPath:String="xml/userprofile.xml";
+		private var _serverPath:String; // path to the server .SWF resides
+		private var _userPath:String = "users/de/derev_diggs/"; // used for local development
+		private var _xmlPath:String="xml/userprofile.xml"; // used for local development
 		
 		//set temporarily to true to test upload feature
 		//private var _isLoggedIn:Boolean=true;
 		private var _isLoggedIn:Boolean=false;
 		
-		private var _stageAlbum:AlbumObject;
+		private var _stageAlbum:AlbumObject; 
 		private var _userAlbum:AlbumObject;
 		private var _SettingsObject:SettingsObject;
 		private var _userName:String="guest";
@@ -45,21 +45,19 @@ package com.sellproto.version1
 		public static var docRoot:Object;
 		public static var docStage:DisplayObject;
         
+		/*
+		*** Grabs environmental variables 
+		*/
+			
         public function MediaCell()
         {
 			trace("SellMedia()");
-			var now:Date = new Date();
-			Security.allowDomain("*");
-			trace(now);
-			trace("offset: " + now.getTimezoneOffset() / 60);
-			trace(now.toDateString());
 			
+			var now:Date = new Date(); // grab current date and time
+			Security.allowDomain("*"); // allow calls to scripts within domain
 			
-			var pageURL:String=ExternalInterface.call('window.location.href.toString');
-			trace("PAGE URL: " + pageURL);
 			docRoot = this;
 			docStage = this.stage;
-			trace("DOC STAGE: " + docStage.stage.height);
         	super();
 			//get the URL of the swf file
 			_pageURL = ExternalInterface.call('window.location.href.toString');
@@ -84,17 +82,8 @@ package com.sellproto.version1
 		
 		private function initAll():void
 		{
-			/*
-			_ViewController =  new ViewController();
-			
-			addChild(_ViewController);
-			_ViewController.initStageMNGR(docStage);
-			_ViewController.addEventListener(ChangeUserEvent.CHANGEUSER, changeUserPrefs);
-			_ViewController.addEventListener("newQuery", doQuery);
-			*/
 			checkLogin();
 			
-	
 		}
 		
 		private function loadProfile():void
