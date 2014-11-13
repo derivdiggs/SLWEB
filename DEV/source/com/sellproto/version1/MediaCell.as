@@ -20,6 +20,7 @@ package com.sellproto.version1
 
 	public class MediaCell extends Sprite
 	{
+		trace("MediaCell v7.6");
 		public static const BASE_URL:String = "http://thoughtrender.com/SLWEB/";
 		private var _ViewController:ViewController; //main viewcontroller
 		private var _XMLProfileManager:XMLProfileManager; // load and parse user profile XML
@@ -35,9 +36,9 @@ package com.sellproto.version1
 		//private var _isLoggedIn:Boolean=true;
 		private var _isLoggedIn:Boolean=false;
 		
-		private var _stageAlbum:AlbumObject; 
-		private var _userAlbum:AlbumObject;
-		private var _SettingsObject:SettingsObject;
+		private var _stageAlbum:AlbumObject; // holder for media items that will appear on the stage
+		private var _userAlbum:AlbumObject; // holder for a users media items
+		private var _SettingsObject:SettingsObject; // holds user settings for application
 		private var _userName:String="guest";
 		private var _pageURL:String;
 		private var _currentQuery:String = "";
@@ -61,7 +62,8 @@ package com.sellproto.version1
         	super();
 			//get the URL of the swf file
 			_pageURL = ExternalInterface.call('window.location.href.toString');
-			//check to see if .swf is local or what the server path is.
+			//checks to see if page is at http://thoughtrender.com/SLWEB/ or http://wwww.thoughtrender.com/SLWEB/
+			// resolves to http://thoughtrender.com/SLWEB/ it it's not here already (for security reasons)
 			if(_pageURL == null || _pageURL == BASE_URL)
 			{
 				_serverPath = BASE_URL;
@@ -86,21 +88,47 @@ package com.sellproto.version1
 			
 		}
 		
+		
+		/*
+		*** if user is logged in load their profile otherwise load a guest profile
+		*/
+			
+		private function checkLogin():void
+		{
+			
+			if(_isLoggedIn)
+			{
+				loadProfile();
+				//commented out new
+				_ViewController.changeLoginStatus(true);
+			}
+			else
+			{
+				_userPath = "users/gu/guest/";	
+				loadProfile();
+				
+			}
+		}
+		
 		private function loadProfile():void
 		{
 			trace("loadProfile()")
-			var fullXMLpath:String = _serverPath + "getprefs2.php?user="+ _userName;
+			var fullXMLpath:String = _serverPath + "getprefs2.php?user="+ _userName; // create path to user xml
 		
 			_XMLProfileManager = new XMLProfileManager();
 		   	_XMLProfileManager.init(fullXMLpath);
 		   	_XMLProfileManager.addEventListener("dataArrayLoaded", profileDataComplete);
 		}
-		
+		/*
+		*** change users and load the new user's prefs
+		*/
+			
 		private function changeUserPrefs(e:ChangeUserEvent):void
 		{
 			trace(">>CHANGEUSERPREFS()>>" + e.userName)
 			_userName = e.userName;
-			if(_userName == "derev")
+			//create a debug window for me
+			if(_userName == "deriv")
 			{
 				_debug = new DebugWindow();
 				addChild(_debug);
@@ -151,26 +179,10 @@ package com.sellproto.version1
 		   	_XMLQueryManager.init("doquerry", fullXMLpath2);
 		   	_XMLQueryManager.addEventListener("dataArrayLoaded", queryComplete);
 		}
-		
-		private function checkLogin():void
-		{
-			trace("checkLogin()")
-			trace("_isLoggedIn: " + _isLoggedIn)
-			if(_isLoggedIn)
-			{
-				loadProfile();
-				//commented out new
-				_ViewController.changeLoginStatus(true);
-			}
-			else
-			{
-				_userPath = "users/gu/guest/";	
-				loadProfile();
-				
-			}
-		}
+
 		
 		//invoked after gallery XML data is finished loading
+		
 		protected function galleryDataComplete(e:CustomEvent):void
 		{
 			//
@@ -208,7 +220,6 @@ package com.sellproto.version1
 			_ViewController.addEventListener(ChangeUserEvent.CHANGEUSER, changeUserPrefs);
 			_ViewController.addEventListener("newQuery", doQuery);
 			_ViewController.passSettings(_XMLProfileManager.mySettings);
-			//initialImageLoad();
 			imageQuery("initial", "null");
 			_ViewController.setPaths(_serverPath, _userPath);
 		}
@@ -217,14 +228,10 @@ package com.sellproto.version1
 		{
 			trace("** RELOADED USER DATA LOAD COMPLETE ** USER DATA LOAD COMPLETE ** USER DATA LOAD COMPLETE **: "+_XMLProfileManager.mySettings);
 			_SettingsObject = _XMLProfileManager.mySettings;
-			//_ViewController.passSettings(_XMLProfileManager.mySettings);
-			//_ViewController.passSettings(_SettingsObject);
 			_userPath = _SettingsObject.getShortPath();
 			
 			_ViewController.passSettings(_SettingsObject);
 			_ViewController.setPaths(_serverPath, _userPath);
-			//authorQuery();
-			//initialImageLoad();
 			imageQuery("author", "null");
 		}	
 	}

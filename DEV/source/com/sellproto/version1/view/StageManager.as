@@ -109,6 +109,7 @@ package com.sellproto.version1.view
 		
 		public function setUserName(userName:String):void
 		{
+			trace("set user name to " + userName);
 			_Logo._userName_dt.text = userName;
 			
 			//render(spath:String, upath:String, size:Number)
